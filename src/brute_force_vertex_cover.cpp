@@ -1,5 +1,7 @@
 #include "../include/brute_force_vertex_cover.h"
+#include "../include/connectivity.h"
 #include <cmath>
+#include <queue>
 
 using namespace std;
 
@@ -29,7 +31,7 @@ vector<int> findMinimalVertexCover(const vector<vector<int>>& graph) {
                 ++coverSize;
             }
         }
-        if (isVertexCover(graph, cover) && coverSize < minCoverSize) {
+        if (isVertexCover(graph, cover) && isConnected(graph, cover) && coverSize < minCoverSize) {
             minCoverSize = coverSize;
             minCover = cover;
         }
