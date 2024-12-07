@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// sprawdzenie spójności grafu algorytmem BFS
 bool isConnected(const vector<vector<int>>& graph, const vector<int>& cover) {
     int V = graph.size();
     vector<bool> visited(V, false);

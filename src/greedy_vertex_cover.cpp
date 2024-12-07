@@ -6,7 +6,7 @@
 
 using namespace std;
 
-vector<int> greedyVertexCover(const vector<vector<int>>& graph) {
+vector<int> greedyCVC(const vector<vector<int>>& graph) {
     int V = graph.size();
     vector<int> cover(V, 0);
     vector<pair<int, int>> degree(V);

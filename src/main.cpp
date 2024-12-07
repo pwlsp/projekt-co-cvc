@@ -22,15 +22,15 @@ int main() {
     vector<vector<int>> graph = readAdjacencyMatrix(filename);
 
     cout << "Brute-force Vertex Cover:" << endl;
-    vector<int> bruteForceCover = findMinimalVertexCover(graph);
+    vector<int> bruteForceCover = bruteForceCVC(graph);
     printVertexCover(bruteForceCover);
 
     cout << "Heuristic Vertex Cover:" << endl;
-    vector<int> heuristicCover = heuristicVertexCover(graph);
+    vector<int> heuristicCover = heuristicCVC(graph);
     printVertexCover(heuristicCover);
 
     cout << "Greedy Vertex Cover:" << endl;
-    vector<int> greedyCover = greedyVertexCover(graph);
+    vector<int> greedyCover = greedyCVC(graph);
     printVertexCover(greedyCover);
 
     return 0;

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<int> heuristicVertexCover(const vector<vector<int>>& graph) {
+vector<int> heuristicCVC(const vector<vector<int>>& graph) {
     int V = graph.size();
     vector<int> cover(V, 0);
     vector<bool> visited(V, false);

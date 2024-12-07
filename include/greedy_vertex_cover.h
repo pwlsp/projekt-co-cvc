@@ -3,6 +3,6 @@
 
 #include <vector>
 
-std::vector<int> greedyVertexCover(const std::vector<std::vector<int>>& graph);
+std::vector<int> greedyCVC(const std::vector<std::vector<int>>& graph);
 
 #endif // GREEDY_VERTEX_COVER_H

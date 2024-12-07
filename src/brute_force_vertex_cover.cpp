@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// szukamy, czy istnieje krawędź, która nie ma żadnego z końców w wierzchołkach pokrycia
 bool isVertexCover(const vector<vector<int>>& graph, const vector<int>& cover) {
     int V = graph.size();
     for (int u = 0; u < V; ++u) {
@@ -17,7 +18,7 @@ bool isVertexCover(const vector<vector<int>>& graph, const vector<int>& cover) {
     return true;
 }
 
-vector<int> findMinimalVertexCover(const vector<vector<int>>& graph) {
+vector<int> bruteForceCVC(const vector<vector<int>>& graph) {
     int V = graph.size();
     int minCoverSize = V;
     vector<int> minCover;
