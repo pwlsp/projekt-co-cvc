@@ -1,6 +1,7 @@
 #include "../include/greedy_vertex_cover.h"
 #include "../include/connectivity.h"
 #include <algorithm>
+#include <iostream>
 #include <vector>
 #include <queue>
 
@@ -23,20 +24,55 @@ vector<int> greedyCVC(const vector<vector<int>>& graph) {
     sort(degree.rbegin(), degree.rend());
 
     vector<bool> visited(V, false);
+    int count_visited = 0;
 
-    for (const auto& d : degree) {
-        int u = d.second;
-        if (!visited[u]) {
-            cover[u] = 1;
-            visited[u] = true;
-            for (int v = 0; v < V; ++v) {
-                if (graph[u][v] && !visited[v]) {
-                    cover[v] = 1;
-                    visited[v] = true;
+    cout << "\n------------------\n\n";
+
+    int u = degree[0].second;
+    cout << u << endl;
+    cover[u] = 1;
+    visited[u] = true;
+    count_visited++;
+    for (int i = 0; i < V; ++i){
+        if (graph[u][i] && !visited[i]){
+            visited[i] = true;
+            count_visited++;
+        }
+    }
+    degree.erase(degree.begin());
+
+    while (count_visited < V){
+        for (int i = 0; i < degree.size(); ++i){
+            cout << degree[i].second << " ";
+        }
+        cout << endl;
+
+        int s = degree.size();
+
+        for (int i = 0; i < s; ++i){
+            u = degree[i].second;
+            bool connects = false;
+            for (int j = 0; j < V; ++j){
+                if (graph[u][j] && cover[j]){
+                    connects = true;
                 }
+            }
+            if(connects){
+                cout << u << endl;
+                cover[u] = 1;
+                for (int j = 0; j < V; ++j){
+                    if (graph[u][j] && !visited[j]){
+                        visited[j] = true;
+                        count_visited++;
+                    }
+                }
+                degree.erase(degree.begin() + i);
+                break;
             }
         }
     }
+
+    cout << "\n------------------\n\n";
 
     return cover;
 }
