@@ -18,7 +18,7 @@ void printVertexCover(const vector<int>& cover) {
 }
 
 int main() {
-    string filename = "graph.json";
+    string filename = "./src/graph.json";
     vector<vector<int>> graph = readAdjacencyMatrix(filename);
 
     cout << "Brute-force Vertex Cover:" << endl;

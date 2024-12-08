@@ -19,37 +19,20 @@ vector<int> greedyCVC(const vector<vector<int>>& graph) {
             }
         }
     }
-
+    
     sort(degree.rbegin(), degree.rend());
 
     vector<bool> visited(V, false);
-    vector<bool> inCover(V, false);
 
     for (const auto& d : degree) {
         int u = d.second;
         if (!visited[u]) {
             cover[u] = 1;
             visited[u] = true;
-            inCover[u] = true;
             for (int v = 0; v < V; ++v) {
                 if (graph[u][v] && !visited[v]) {
                     cover[v] = 1;
                     visited[v] = true;
-                    inCover[v] = true;
-                }
-            }
-        }
-    }
-
-    if (!isConnected(graph, cover)) {
-        for (int u = 0; u < V; ++u) {
-            if (!inCover[u]) {
-                for (int v = 0; v < V; ++v) {
-                    if (inCover[v] && graph[u][v]) {
-                        cover[u] = 1;
-                        inCover[u] = true;
-                        break;
-                    }
                 }
             }
         }
