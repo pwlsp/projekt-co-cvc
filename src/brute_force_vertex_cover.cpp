@@ -26,6 +26,7 @@ vector<int> bruteForceCVC(const vector<vector<int>>& graph) {
     for (int i = 0; i < (1 << V); ++i) {
         vector<int> cover(V, 0);
         int coverSize = 0;
+        // iterujemy po wierzchołkach i bitowym AND'em sprawdzamy, czy dany wierzchołek jest w pokryciu
         for (int j = 0; j < V; ++j) {
             if (i & (1 << j)) {
                 cover[j] = 1;
