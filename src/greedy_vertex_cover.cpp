@@ -12,41 +12,45 @@ vector<int> greedyCVC(const vector<vector<int>>& graph) {
     vector<int> cover(V, 0);
     vector<pair<int, int>> degree(V);
 
+    // Liczymy stopnie wierzchołków i liczbę krawędzi
+    int edges_count = 0;
     for (int i = 0; i < V; ++i) {
         degree[i] = {0, i};
         for (int j = 0; j < V; ++j) {
             if (graph[i][j]) {
                 degree[i].first++;
+                edges_count++;
             }
         }
     }
+    edges_count = edges_count / 2;
     
     sort(degree.rbegin(), degree.rend());
 
-    vector<bool> visited(V, false);
-    int count_visited = 0;
-
-    cout << "\n------------------\n\n";
+    // Kopia grafu, w której będziemy odhaczać krawędzie zaliczone
+    vector<vector<int>> graph_copy = graph;
 
     int u = degree[0].second;
     cout << u << endl;
     cover[u] = 1;
-    visited[u] = true;
-    count_visited++;
     for (int i = 0; i < V; ++i){
-        if (graph[u][i] && !visited[i]){
-            visited[i] = true;
-            count_visited++;
+        if (graph_copy[u][i]){
+            graph_copy[u][i] = 0;
+            graph_copy[i][u] = 0;
+            edges_count--;
         }
     }
     degree.erase(degree.begin());
 
-    while (count_visited < V){
-        for (int i = 0; i < degree.size(); ++i){
-            cout << degree[i].second << " ";
-        }
-        cout << endl;
+    // Główna część
+    while (edges_count > 0){
+        // for (int i = 0; i < degree.size(); ++i){
+        //     cout << degree[i].second << " ";
+        // }
+        // cout << endl;
 
+        // z degree usuwamy wierzchołki, które już są w pokryciu
+        // s = liczba wierzchołków, które jeszcze nie są w pokryciu
         int s = degree.size();
 
         for (int i = 0; i < s; ++i){
@@ -58,21 +62,30 @@ vector<int> greedyCVC(const vector<vector<int>>& graph) {
                 }
             }
             if(connects){
-                cout << u << endl;
                 cover[u] = 1;
                 for (int j = 0; j < V; ++j){
-                    if (graph[u][j] && !visited[j]){
-                        visited[j] = true;
-                        count_visited++;
+                    if (graph_copy[u][j]){
+                        graph_copy[u][j] = 0;
+                        graph_copy[j][u] = 0;
+                        edges_count--;
                     }
                 }
                 degree.erase(degree.begin() + i);
+
+                // Print out the current state of graph_copy
+                // cout << "Current \"edges count\": " << edges_count << endl;
+                // cout << "Current state of graph_copy:" << endl;
+                // for (int i = 0; i < V; ++i) {
+                //     for (int j = 0; j < V; ++j) {
+                //         cout << graph_copy[i][j] << " ";
+                //     }
+                //     cout << endl;
+                // }
+
                 break;
             }
         }
     }
-
-    cout << "\n------------------\n\n";
 
     return cover;
 }
