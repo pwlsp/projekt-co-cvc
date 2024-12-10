@@ -21,15 +21,15 @@ int main() {
     string filename = "./src/graph.json";
     vector<vector<int>> graph = readAdjacencyMatrix(filename);
 
-    cout << "Brute-force Vertex Cover:" << endl;
+    cout << "Brute-force Connected Vertex Cover" << endl;
     vector<int> bruteForceCover = bruteForceCVC(graph);
     printVertexCover(bruteForceCover);
 
-    cout << "Heuristic Vertex Cover:" << endl;
+    cout << "\nHeuristic Connected Vertex Cover" << endl;
     vector<int> heuristicCover = heuristicCVC(graph);
     printVertexCover(heuristicCover);
 
-    cout << "Greedy Vertex Cover:" << endl;
+    cout << "\nGreedy Connected Vertex Cover" << endl;
     vector<int> greedyCover = greedyCVC(graph);
     printVertexCover(greedyCover);
 

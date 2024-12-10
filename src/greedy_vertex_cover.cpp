@@ -31,7 +31,6 @@ vector<int> greedyCVC(const vector<vector<int>>& graph) {
     vector<vector<int>> graph_copy = graph;
 
     int u = degree[0].second;
-    cout << u << endl;
     cover[u] = 1;
     for (int i = 0; i < V; ++i){
         if (graph_copy[u][i]){
