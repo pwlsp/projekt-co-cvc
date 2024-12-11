@@ -22,6 +22,7 @@ vector<int> heuristicCVC(const vector<vector<int>>& graph) {
             }
         }
     }
+    edges_count = edges_count / 2;
 
     int u = rand() % V;
     to_visit[u] = true;
