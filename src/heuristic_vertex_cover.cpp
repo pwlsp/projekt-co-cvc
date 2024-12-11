@@ -27,13 +27,9 @@ vector<int> heuristicCVC(const vector<vector<int>>& graph) {
     int u = rand() % V;
     to_visit[u] = true;
 
-    // cout << "Current \"edges count\": " << edges_count << endl;
-    // cout << "Current state of graph_copy:" << endl;
     for (int i = 0; i < V; ++i) {
         for (int j = 0; j < V; ++j) {
-            // cout << graph_copy[i][j] << " ";
         }
-        // cout << endl;
     }
 
     while (edges_count > 0){
@@ -49,7 +45,6 @@ vector<int> heuristicCVC(const vector<vector<int>>& graph) {
         for (int i = 0; i < V; ++i){
             if(graph_copy[u][i] == 1){
                 v = i;
-                // cout << "added edge: " << u << "-" << v << endl;
                 graph_copy[u][v] = 0;
                 graph_copy[v][u] = 0;
                 edges_count--;
@@ -59,8 +54,7 @@ vector<int> heuristicCVC(const vector<vector<int>>& graph) {
                 break;
             }
         }
-        if (v == -1){
-            // cout << "to_visit[" << u << "] = false;" << endl;       
+        if (v == -1){     
             continue;
         }
 
@@ -77,21 +71,6 @@ vector<int> heuristicCVC(const vector<vector<int>>& graph) {
                 graph_copy[i][v] = 0;
                 edges_count--;
             }
-        }
-        // cout << "Current \"edges count\": " << edges_count << endl;
-        // // Print out the current state of to_visit
-        // cout << "Current state of to_visit:" << endl;
-        for (int i = 0; i < V; ++i) {
-            // cout << to_visit[i] << " ";
-        }
-        // cout << endl;
-        // Print out the current state of graph_copy
-        // cout << "Current state of graph_copy:" << endl;
-        for (int i = 0; i < V; ++i) {
-            for (int j = 0; j < V; ++j) {
-                // cout << graph_copy[i][j] << " ";
-            }
-            // cout << endl;
         }
     }
 

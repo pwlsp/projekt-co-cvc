@@ -8,38 +8,33 @@
 using json = nlohmann::json;
 using namespace std;
 
-int generateRandomNumber(int x, int y)
-{
+int generateRandomNumber(int x, int y){
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<int> distribution(x, y);
     return distribution(gen);
 }
 
-void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelfLoops)
-{
-    if (edgePercentage < 0 || edgePercentage > 100)
-    {
+void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelfLoops){
+    if (edgePercentage < 0 || edgePercentage > 100){
         cerr << "Error: Edge percentage must be between 0 and 100." << endl;
         return;
     }
 
     vector<vector<int>> graph(vertices, vector<int>(vertices, 0));
 
-    // Ensure the graph is connected by creating a spanning tree first
+    // Tworzenie szkieletu grafu w postaci drzewa rozpinającego, aby graf był spójny
     random_device rd;
     mt19937 gen(rd());
     vector<int> connected(vertices, 0);
     connected[0] = 1;
     int connectedCount = 1;
 
-    while (connectedCount < vertices)
-    {
+    while (connectedCount < vertices){
         int i = generateRandomNumber(0, vertices - 1);
         int j = generateRandomNumber(0, vertices - 1);
 
-        if (i != j && (connected[i] == 1 && connected[j] == 0 || connected[i] == 0 && connected[j] == 1))
-        {
+        if (i != j && (connected[i] == 1 && connected[j] == 0 || connected[i] == 0 && connected[j] == 1)){
             graph[i][j] = 1;
             graph[j][i] = 1;
             connected[i] = connected[j] = 1;
@@ -47,20 +42,17 @@ void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelf
         }
     }
 
-    int maxEdges = vertices * (vertices - 1) / 2 + (allowSelfLoops ? vertices : 0); // Including self-loops if allowed
+    int maxEdges = vertices * (vertices - 1) / 2 + (allowSelfLoops ? vertices : 0);
     int edges = static_cast<int>(maxEdges * edgePercentage / 100.0);
 
-    int currentEdges = vertices - 1; // Start with the edges from the spanning tree
-    while (currentEdges < edges)
-    {
+    int currentEdges = vertices - 1;
+    while (currentEdges < edges){
         int i = generateRandomNumber(0, vertices - 1);
         int j = generateRandomNumber(0, vertices - 1);
 
-        if (graph[i][j] == 0 && (allowSelfLoops || i != j))
-        {
+        if (graph[i][j] == 0 && (allowSelfLoops || i != j)){
             graph[i][j] = 1;
-            if (i != j) // Only increment the other side if it's not a self-loop
-            {
+            if (i != j){
                 graph[j][i] = 1;
             }
             currentEdges++;
@@ -70,11 +62,9 @@ void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelf
     ofstream file("./src/graph.json");
     file << "{\n";
     file << "    \"adjacency_matrix\": [\n";
-    for (size_t i = 0; i < graph.size(); ++i)
-    {
+    for (size_t i = 0; i < graph.size(); ++i){
         file << "        [";
-        for (size_t j = 0; j < graph[i].size(); ++j)
-        {
+        for (size_t j = 0; j < graph[i].size(); ++j){
             file << graph[i][j];
             if (j < graph[i].size() - 1)
                 file << ", ";
@@ -89,10 +79,8 @@ void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelf
     file.close();
 }
 
-int main(int argc, char *argv[])
-{
-    if (argc < 3)
-    {
+int main(int argc, char *argv[]){
+    if (argc < 3){
         std::cout << "No arguments given\n";
         return 1;
     }
