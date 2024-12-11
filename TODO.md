@@ -1,0 +1,10 @@
+- [x] ~~czytanie grafu~~
+- [x] ~~algorytmy~~
+  - [x] ~~brute-force~~
+  - [x] ~~greedy~~
+  - [x] ~~heuristic~~
+- [x] poboczne:
+  - [x] ~~wypisywanie (konwersja) grafu~~
+- [ ] testy czasowe
+- [ ] wykresy testów czasowych
+- [ ] (stronka Zwierzaka)

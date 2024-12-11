@@ -26,10 +26,31 @@ void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelf
 
     vector<vector<int>> graph(vertices, vector<int>(vertices, 0));
 
+    // Ensure the graph is connected by creating a spanning tree first
+    random_device rd;
+    mt19937 gen(rd());
+    vector<int> connected(vertices, 0);
+    connected[0] = 1;
+    int connectedCount = 1;
+
+    while (connectedCount < vertices)
+    {
+        int i = generateRandomNumber(0, vertices - 1);
+        int j = generateRandomNumber(0, vertices - 1);
+
+        if (i != j && (connected[i] == 1 && connected[j] == 0 || connected[i] == 0 && connected[j] == 1))
+        {
+            graph[i][j] = 1;
+            graph[j][i] = 1;
+            connected[i] = connected[j] = 1;
+            connectedCount++;
+        }
+    }
+
     int maxEdges = vertices * (vertices - 1) / 2 + (allowSelfLoops ? vertices : 0); // Including self-loops if allowed
     int edges = static_cast<int>(maxEdges * edgePercentage / 100.0);
 
-    int currentEdges = 0;
+    int currentEdges = vertices - 1; // Start with the edges from the spanning tree
     while (currentEdges < edges)
     {
         int i = generateRandomNumber(0, vertices - 1);
@@ -68,20 +89,17 @@ void generateAdjacencyMatrix(int vertices, double edgePercentage, bool allowSelf
     file.close();
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    int vertices;
-    double edgePercentage;
-    char selfLoopsOption;
-    bool allowSelfLoops;
+    if (argc < 3)
+    {
+        std::cout << "No arguments given\n";
+        return 1;
+    }
 
-    cout << "Enter number of vertices: ";
-    cin >> vertices;
-    cout << "Enter percentage of maximum number of edges: ";
-    cin >> edgePercentage;
-    cout << "Allow self-loops? (y/n): ";
-    cin >> selfLoopsOption;
-    allowSelfLoops = (selfLoopsOption == 'y' || selfLoopsOption == 'Y');
+    int vertices = stoi(argv[1]);
+    double edgePercentage = stod(argv[2]);
+    bool allowSelfLoops = true;
 
     generateAdjacencyMatrix(vertices, edgePercentage, allowSelfLoops);
     return 0;

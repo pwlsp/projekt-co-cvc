@@ -17,21 +17,42 @@ void printVertexCover(const vector<int>& cover) {
     cout << endl;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << " <mode: b|h|g>" << endl;
+        return 1;
+    }
+
+    char mode = argv[1][0];
     string filename = "./src/graph.json";
     vector<vector<int>> graph = readAdjacencyMatrix(filename);
 
-    cout << "Brute-force Connected Vertex Cover" << endl;
-    vector<int> bruteForceCover = bruteForceCVC(graph);
-    printVertexCover(bruteForceCover);
-
-    cout << "\nHeuristic Connected Vertex Cover" << endl;
-    vector<int> heuristicCover = heuristicCVC(graph);
-    printVertexCover(heuristicCover);
-
-    cout << "\nGreedy Connected Vertex Cover" << endl;
-    vector<int> greedyCover = greedyCVC(graph);
-    printVertexCover(greedyCover);
+    switch (mode) {
+        case 'b':
+            // cout << "Brute-force Connected Vertex Cover" << endl;
+            {
+                vector<int> bruteForceCover = bruteForceCVC(graph);
+                // printVertexCover(bruteForceCover);
+            }
+            break;
+        case 'h':
+            // cout << "Heuristic Connected Vertex Cover" << endl;
+            {
+                vector<int> heuristicCover = heuristicCVC(graph);
+                // printVertexCover(heuristicCover);
+            }
+            break;
+        case 'g':
+            // cout << "Greedy Connected Vertex Cover" << endl;
+            {
+                vector<int> greedyCover = greedyCVC(graph);
+                // printVertexCover(greedyCover);
+            }
+            break;
+        default:
+            cerr << "Invalid mode. Use 'b' for brute-force, 'h' for heuristic, or 'g' for greedy." << endl;
+            return 1;
+    }
 
     return 0;
 }
