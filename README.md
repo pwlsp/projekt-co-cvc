@@ -1,6 +1,3 @@
-Just checkin'.
-
-> 1
 {
     "adjacency_matrix": [
         [0, 1, 0, 0, 0, 0, 1],
